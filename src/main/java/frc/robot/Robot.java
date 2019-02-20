@@ -26,7 +26,7 @@ public class Robot extends TimedRobot {
   public static Drivetrain drivetrain = new Drivetrain();
   public static Elevator elevator = new Elevator();
   public static Grabber grabber = new Grabber();
-  public static Lifter lifter = new Lifter();
+  public static Climber climber = new Climber();
   public static OI oi;
 
   Command m_autonomousCommand;

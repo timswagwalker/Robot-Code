@@ -11,14 +11,11 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Instrumentation;
 import frc.robot.Robot;
 
-public class Aim extends Command {
-  private double target;
-  private double current_angle;
-
-  public Aim() {
+public class Extend extends Command {
+  public Extend() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.grabber);
+    requires(Robot.climber);
   }
 
   // Called just before this Command runs the first time
@@ -29,25 +26,33 @@ public class Aim extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    target = Robot.oi.getSlider() * 180;
-    current_angle = Instrumentation.e_arm_angle.getDistance();
+    double current_angle = Instrumentation.navx.getPitch();
 
-    double speed;
-    speed = (target - current_angle) / target;
+    double front_speed = -1.0 * ((current_angle / 30) + 0.75);
+    double rear_speed = +1.0 * ((current_angle / 30) + 0.75);
 
-    Robot.grabber.setAngle(speed);
+    if (Instrumentation.l_extend_front.get()) {
+      front_speed = 0;
+    }
+    if (Instrumentation.l_extend_rear.get()) {
+      rear_speed = 0;
+    }
+
+    Robot.climber.setFrontLifter(front_speed);
+    Robot.climber.setRearLifter(rear_speed);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Math.abs(target - current_angle) < 0.1;
+    return Instrumentation.l_extend_front.get() && Instrumentation.l_extend_rear.get() && Math.abs(Instrumentation.navx.getPitch()) < 1.0;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.grabber.setAngle(0.0);
+    Robot.climber.setFrontLifter(0.0);
+    Robot.climber.setRearLifter(0.0);
   }
 
   // Called when another command which requires one or more of the same

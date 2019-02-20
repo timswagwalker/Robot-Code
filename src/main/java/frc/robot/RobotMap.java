@@ -41,6 +41,7 @@ public class RobotMap {
   // Lifter controller ports
   public static int m_lifter_front_port = 9;
   public static int m_lifter_rear_port = 10;
+  public static int m_lifter_rear_drive_port = 11;
 
   // Encoder ports
   public static int e_right_port_1 = 0;
@@ -55,6 +56,12 @@ public class RobotMap {
   // Solenoid channels
   public static int s_grabber_channel_fwd = 1;
   public static int s_grabber_channel_rev = 2;
+
+  // Limit Switch channels
+  public static int l_extend_front_port = 1;
+  public static int l_extend_rear_port = 2;
+  public static int l_retract_front_port = 3;
+  public static int l_retract_rear_port = 4;
 
   // Joystick button IDs
   public static int brake_button = 1;
