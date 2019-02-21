@@ -35,10 +35,6 @@ public class Grabber extends Subsystem {
     m_intake_1 = new WPI_VictorSPX(RobotMap.m_intake_1_port);
     m_intake_2 = new WPI_VictorSPX(RobotMap.m_intake_2_port);
 
-    m_arm.configFactoryDefault();
-    m_intake_1.configFactoryDefault();
-    m_intake_2.configFactoryDefault();
-
     m_arm.setInverted(false);
     m_intake_1.setInverted(false);
     m_intake_2.setInverted(false);

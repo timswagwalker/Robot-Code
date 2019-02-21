@@ -30,4 +30,8 @@ public class Constants {
 
     // Field zero-degree measure
     public static final double field_zero = 0.0;
+
+    // Sensitivity
+    public static final double throttle_sensitivity = 0.5;
+    public static final double turn_sensitivity = 0.5;
 }

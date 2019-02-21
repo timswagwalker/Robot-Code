@@ -24,9 +24,9 @@ import frc.robot.subsystems.*;
  */
 public class Robot extends TimedRobot {
   public static Drivetrain drivetrain = new Drivetrain();
-  public static Elevator elevator = new Elevator();
-  public static Grabber grabber = new Grabber();
-  public static Climber climber = new Climber();
+  public static Elevator elevator; //= new Elevator();
+  public static Grabber grabber; //= new Grabber();
+  public static Climber climber; //= new Climber();
   public static OI oi;
 
   Command m_autonomousCommand;
@@ -38,10 +38,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    Instrumentation.init();
     oi = new OI();
-    m_chooser.setDefaultOption("Default Auto", new Drive());
+    // m_chooser.setDefaultOption("Default Auto", new Drive());
     // chooser.addOption("My Auto", new MyAutoCommand());
-    SmartDashboard.putData("Auto mode", m_chooser);
+    // SmartDashboard.putData("Auto mode", m_chooser);
   }
 
   /**
@@ -85,7 +86,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_chooser.getSelected();
+    // m_autonomousCommand = m_chooser.getSelected();
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector", "Default");

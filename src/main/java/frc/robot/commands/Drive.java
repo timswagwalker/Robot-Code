@@ -8,7 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-
+import frc.robot.Instrumentation;
 import frc.robot.Robot;
 
 public class Drive extends Command {
@@ -21,14 +21,26 @@ public class Drive extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.drivetrain.driveManual(0, 0);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     // Set left and right speed values
-    double leftSpeed = Robot.oi.getLeftSpeed();
-    double rightSpeed = Robot.oi.getRightSpeed();
+    double throttle = Robot.oi.getThrottle();
+    double turn = Robot.oi.getTurn();
+
+    double error, kp_correction, ki_correction = 0.0;
+
+    error = Instrumentation.navx.getRate() - turn;
+    kp_correction = 0.1 * error;
+    ki_correction += 0.01 * error;
+
+    turn += kp_correction + ki_correction;
+
+    double leftSpeed = throttle + turn;
+    double rightSpeed = throttle - turn;
 
     if (Robot.oi.getDriveBrake()) {
       // Stop all drivetrain commands
@@ -36,10 +48,10 @@ public class Drive extends Command {
     } else {
       if (Robot.oi.getControlMode()) {
         // <HYPER SWERVE mode> Drive in manual mode
-        Robot.drivetrain.driveManual(leftSpeed, rightSpeed);
+        Robot.drivetrain.driveManual(leftSpeed * 0.5, rightSpeed * 0.5);
       } else {
         // <CRUISE CONTROL mode> Drive in Motion Profile assisted mode
-        Robot.drivetrain.driveAssist(leftSpeed, rightSpeed);
+        Robot.drivetrain.driveAssist(leftSpeed * 0.5, rightSpeed * 0.5);
       }
     }
   }

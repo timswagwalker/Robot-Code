@@ -25,10 +25,10 @@ public class RobotMap {
   // public static int rangefinderModule = 1;
 
   // Drivetrain controller ports
-  public static int m_right_front_port = 1;
-  public static int m_right_rear_port = 2;
-  public static int m_left_rear_port = 3;
-  public static int m_left_front_port = 4;
+  public static int m_right_front_port = 3;
+  public static int m_right_rear_port = 4;
+  public static int m_left_rear_port = 1;
+  public static int m_left_front_port = 2;
 
   // Elevator controller ports
   public static int m_elevator_port = 5;

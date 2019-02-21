@@ -26,7 +26,6 @@ public class Elevator extends Subsystem {
   public Elevator() {
     // Define, reset, and don't invert the motor controllers
     m_elevator = new WPI_VictorSPX(RobotMap.m_elevator_port);
-    m_elevator.configFactoryDefault();
     m_elevator.setInverted(false);
   }
 

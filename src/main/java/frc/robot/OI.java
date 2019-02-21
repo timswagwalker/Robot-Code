@@ -65,32 +65,16 @@ public class OI {
 
   // Drive Methods
 
-  public double getLeftSpeed() {
-    double throttle = -1.0 * driveStick.getY();
-    double turn = +1.0 * driveStick.getZ();
-
+  public double getThrottle() {
+    double throttle = -1.0 * driveStick.getY() * Constants.throttle_sensitivity;
     throttle = deadband(throttle);
-    turn = deadband(turn);
-
-    double speed = Math.pow(throttle, 3) + Math.pow(turn, 3);
-    // subtract deadband if required to remove jerk when joystick moves out of
-    // deadband
-
-    return speed;
+    return throttle;
   }
 
-  public double getRightSpeed() {
-    double throttle = -1.0 * driveStick.getY();
-    double turn = +1.0 * driveStick.getZ();
-
-    throttle = deadband(throttle);
+  public double getTurn() {
+    double turn = +1.0 * driveStick.getZ() * Constants.turn_sensitivity;
     turn = deadband(turn);
-
-    double speed = Math.pow(throttle, 3) - Math.pow(turn, 3);
-    // subtract deadband if required to remove jerk when joystick moves out of
-    // deadband
-
-    return speed;
+    return turn;
   }
 
   public Boolean getControlMode() {

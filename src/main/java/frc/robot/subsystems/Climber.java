@@ -11,7 +11,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
@@ -23,17 +22,13 @@ public class Climber extends Subsystem {
   WPI_VictorSPX m_lifter_front, m_lifter_rear, m_rear_drive;
 
   public Climber() {
-    m_lifter_front = new WPI_VictorSPX(RobotMap.m_lifter_front_port);
-    m_lifter_rear = new WPI_VictorSPX(RobotMap.m_lifter_rear_port);
-    m_rear_drive = new WPI_VictorSPX(RobotMap.m_lifter_rear_drive_port);
+    // m_lifter_front = new WPI_VictorSPX(RobotMap.m_lifter_front_port);
+    // m_lifter_rear = new WPI_VictorSPX(RobotMap.m_lifter_rear_port);
+    // m_rear_drive = new WPI_VictorSPX(RobotMap.m_lifter_rear_drive_port);
 
-    m_lifter_front.configFactoryDefault();
-    m_lifter_rear.configFactoryDefault();
-    m_rear_drive.configFactoryDefault();
-
-    m_lifter_front.setInverted(false);
-    m_lifter_rear.setInverted(false);
-    m_rear_drive.setInverted(false);
+    // m_lifter_front.setInverted(false);
+    // m_lifter_rear.setInverted(false);
+    // m_rear_drive.setInverted(false);
   }
 
   @Override
