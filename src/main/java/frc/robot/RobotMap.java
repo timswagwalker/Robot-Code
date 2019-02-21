@@ -38,10 +38,10 @@ public class RobotMap {
   public static int m_intake_1_port = 7;
   public static int m_intake_2_port = 8;
 
-  // Lifter controller ports
-  public static int m_lifter_front_port = 9;
-  public static int m_lifter_rear_port = 10;
-  public static int m_lifter_rear_drive_port = 11;
+  // Climber controller ports
+  public static int m_climber_front_port = 9;
+  public static int m_climber_rear_port = 10;
+  public static int m_climber_rear_drive_port = 11;
 
   // Encoder ports
   public static int e_right_port_1 = 0;

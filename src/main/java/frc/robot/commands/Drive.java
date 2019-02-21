@@ -47,11 +47,11 @@ public class Drive extends Command {
       Robot.drivetrain.driveManual(0, 0);
     } else {
       if (Robot.oi.getControlMode()) {
-        // <HYPER SWERVE mode> Drive in manual mode
-        Robot.drivetrain.driveManual(leftSpeed * 0.5, rightSpeed * 0.5);
+        // <HYPER STEER mode> Drive in manual mode
+        Robot.drivetrain.driveManual(leftSpeed, rightSpeed);
       } else {
         // <CRUISE CONTROL mode> Drive in Motion Profile assisted mode
-        Robot.drivetrain.driveAssist(leftSpeed * 0.5, rightSpeed * 0.5);
+        Robot.drivetrain.driveAssist(leftSpeed, rightSpeed);
       }
     }
   }

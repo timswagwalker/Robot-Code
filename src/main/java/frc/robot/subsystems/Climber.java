@@ -19,7 +19,7 @@ public class Climber extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  WPI_VictorSPX m_lifter_front, m_lifter_rear, m_rear_drive;
+  WPI_VictorSPX m_climber_front, m_climber_rear, m_rear_drive;
 
   public Climber() {
     // m_lifter_front = new WPI_VictorSPX(RobotMap.m_lifter_front_port);
@@ -38,11 +38,11 @@ public class Climber extends Subsystem {
   }
 
   public void setFrontLifter(double speed) {
-    m_lifter_front.set(ControlMode.PercentOutput, speed);
+    m_climber_front.set(ControlMode.PercentOutput, speed);
   }
 
   public void setRearLifter(double speed) {
-    m_lifter_rear.set(ControlMode.PercentOutput, speed);
+    m_climber_rear.set(ControlMode.PercentOutput, speed);
   }
 
   public void setRearDrive(double speed) {

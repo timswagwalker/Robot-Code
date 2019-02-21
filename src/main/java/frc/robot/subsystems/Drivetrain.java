@@ -128,7 +128,7 @@ public class Drivetrain extends Subsystem {
 
   // Get motion profile speeds
   public double getMotion(double target, int side) {
-    // double acceleration = -1.0 * Instrumentation.navx.getWorldLinearAccelY() * 9.80665; // meters/sec^2
+    double acceleration = -1.0 * Instrumentation.navx.getWorldLinearAccelY() * 9.80665; // meters/sec^2
     double velocity = -1.0 * Instrumentation.navx.getVelocityY(); // meters/sec
 
     double distance = 0.0;
@@ -151,11 +151,11 @@ public class Drivetrain extends Subsystem {
     if (Math.abs(cruise_velocity - velocity) > 0.1) {
       // Acceleration still in progress
       if (distance < waypoint1) {
-        output = velocity + (max_acceleration * 0.01);
+        output = velocity + (acceleration * 0.01);
       }
       // Deceleration still in progress
       else if (distance > waypoint2) {
-        output = velocity - (max_acceleration * 0.01);
+        output = velocity - (acceleration * 0.01);
       }
       // Reset speed during cruise
       else {
@@ -189,7 +189,7 @@ public class Drivetrain extends Subsystem {
       /* Do Nothing */ }
   }
 
-  // <HYPER SWERVE mode> Drive manually without Motion Profiling
+  // <HYPER STEER mode> Drive manually without Motion Profiling
   public void driveManual(double left, double right) {
     m_left_front.set(ControlMode.PercentOutput, left);
     m_right_front.set(ControlMode.PercentOutput, right);

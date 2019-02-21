@@ -40,5 +40,8 @@ public class Instrumentation {
         e_left.reset();
         // e_elevator.reset();
         // e_arm_angle.reset();
+
+        e_right.setDistancePerPulse(0.047);
+        e_left.setDistancePerPulse(0.047);
     }
 }
