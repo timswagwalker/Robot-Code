@@ -23,10 +23,10 @@ import frc.robot.subsystems.*;
  * project.
  */
 public class Robot extends TimedRobot {
-  public static Drivetrain drivetrain = new Drivetrain();
-  public static Elevator elevator; //= new Elevator();
-  public static Grabber grabber; //= new Grabber();
-  public static Climber climber; //= new Climber();
+  public static Drivetrain drivetrain;
+  public static Elevator elevator;
+  public static Grabber grabber;
+  public static Climber climber;
   public static OI oi;
 
   Command m_autonomousCommand;
@@ -40,6 +40,8 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     Instrumentation.init();
     oi = new OI();
+    drivetrain = new Drivetrain();
+    drivetrain.driveManual(0, 0);
     // m_chooser.setDefaultOption("Default Auto", new Drive());
     // chooser.addOption("My Auto", new MyAutoCommand());
     // SmartDashboard.putData("Auto mode", m_chooser);

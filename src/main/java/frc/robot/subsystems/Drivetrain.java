@@ -30,7 +30,7 @@ public class Drivetrain extends Subsystem {
   // here. Call these from Commands.
 
   static WPI_TalonSRX m_left_front, m_left_follower, m_right_front, m_right_follower;
-  static double cruise_velocity, max_acceleration;
+  static double max_acceleration;
 
   public Drivetrain() {
     // Define motors
@@ -67,8 +67,7 @@ public class Drivetrain extends Subsystem {
     m_right_follower.follow(m_right_front);
 
     // Set the cruise velocity and acceleration
-    cruise_velocity = 15; // meters/sec <==NOTE: Find the max velocity for the robot
-    max_acceleration = 6; // meters/sec^2
+    max_acceleration = 1; // joystick_units/sec^2
 
     /* setupMotionMagic(); */
   }
@@ -127,44 +126,21 @@ public class Drivetrain extends Subsystem {
   }
 
   // Get motion profile speeds
-  public double getMotion(double target, int side) {
-    double acceleration = -1.0 * Instrumentation.navx.getWorldLinearAccelY() * 9.80665; // meters/sec^2
-    double velocity = -1.0 * Instrumentation.navx.getVelocityY(); // meters/sec
-
-    double distance = 0.0;
-    if (side == -1) {
-      distance = +1.0 * Instrumentation.e_left.getDistance(); // meters
-    } else if (side == 1) {
-      distance = +1.0 * Instrumentation.e_right.getDistance(); // meters
+  public double getMotion(double target, Boolean is_left) {
+    // Make motion profiling to work on target velocity set by the joystick, predefined acceleration, and should ramp up velocity to the target.
+    double target_vel = target;
+    double current_vel = 0.0;
+    if (is_left) {
+      current_vel = Instrumentation.e_left.getRate(); // inches/sec
+    } else {
+      current_vel = Instrumentation.e_right.getRate(); // inches/sec
     }
 
-    // Get distance at points where acceleration changes
-    double waypoint1 = Math.pow(cruise_velocity, 2) / (2 * max_acceleration);
-    double waypoint2 = target - (Math.pow(cruise_velocity, 2) / (2 * max_acceleration));
-    if (waypoint1 > waypoint2) {
-      waypoint1 = target / 2;
-      waypoint2 = target / 2;
-    }
-
-    // 0.01 sec (10 ms) timeout
     double output = 0.0;
-    if (Math.abs(cruise_velocity - velocity) > 0.1) {
-      // Acceleration still in progress
-      if (distance < waypoint1) {
-        output = velocity + (acceleration * 0.01);
-      }
-      // Deceleration still in progress
-      else if (distance > waypoint2) {
-        output = velocity - (acceleration * 0.01);
-      }
-      // Reset speed during cruise
-      else {
-        output = cruise_velocity;
-      }
-    }
-    // Reset speed during cruise
-    else {
-      output = cruise_velocity;
+    if (Math.abs(target_vel - current_vel) <= 0.05) {
+      output = target_vel;
+    } else {
+      output = current_vel + (0.2 * max_acceleration);
     }
 
     return output;
@@ -172,15 +148,15 @@ public class Drivetrain extends Subsystem {
 
   // <CRUISE CONTROL mode> Drive with Motion Profile assist
   public void driveAssist(double left, double right) {
-    // Get target positions for each side of the drivebase
-    double left_target_pos = left * 10;
-    double right_target_pos = right * 10;
+    // Get target velocities for each side of the drivebase
+    double left_target_vel = left;
+    double right_target_vel = right;
 
-    // Assign the target positions to each side of the drivebase with Motion Magic
+    // Assign the target velocities to each side of the drivebase with Motion Magic
     // m_left_front.set(ControlMode.MotionMagic, left_target_pos);
     // m_right_front.set(ControlMode.MotionMagic, right_target_pos);
-    m_left_front.set(ControlMode.PercentOutput, (getMotion(left_target_pos, -1) / cruise_velocity));
-    m_right_front.set(ControlMode.PercentOutput, (getMotion(right_target_pos, +1) / cruise_velocity));
+    m_left_front.set(ControlMode.PercentOutput, getMotion(left_target_vel, true));
+    m_right_front.set(ControlMode.PercentOutput, getMotion(right_target_vel, false));
 
     /* 10 Ms timeout, allow CAN Frames to process */
     try {
@@ -202,4 +178,5 @@ public class Drivetrain extends Subsystem {
     m_right_front.set(0);
     m_right_follower.set(0);
   }
+
 }

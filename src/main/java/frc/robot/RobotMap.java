@@ -54,8 +54,8 @@ public class RobotMap {
   public static int e_arm_port_2 = 7;
 
   // Solenoid channels
-  public static int s_grabber_channel_fwd = 1;
-  public static int s_grabber_channel_rev = 2;
+  public static int s_grabber_channel_fwd = 0;
+  public static int s_grabber_channel_rev = 4;
 
   // Limit Switch channels
   public static int l_extend_front_port = 1;
