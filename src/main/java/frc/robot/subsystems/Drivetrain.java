@@ -7,8 +7,6 @@
 
 package frc.robot.subsystems;
 
-import java.util.concurrent.TimeUnit;
-
 // extra libraries
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
@@ -17,7 +15,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 import frc.robot.RobotMap;
 import frc.robot.Constants;
-import frc.robot.Instrumentation;
 
 // commands
 import frc.robot.commands.Drive;
@@ -29,8 +26,10 @@ public class Drivetrain extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  static WPI_TalonSRX m_left_front, m_left_follower, m_right_front, m_right_follower;
-  static double max_acceleration;
+  WPI_TalonSRX m_left_front, m_left_follower, m_right_front, m_right_follower;
+  double max_acceleration;
+  double last_right_velocity = 0.0;
+  double last_left_velocity = 0.0;
 
   public Drivetrain() {
     // Define motors
@@ -128,19 +127,27 @@ public class Drivetrain extends Subsystem {
   // Get motion profile speeds
   public double getMotion(double target, Boolean is_left) {
     // Make motion profiling to work on target velocity set by the joystick, predefined acceleration, and should ramp up velocity to the target.
-    double target_vel = target;
-    double current_vel = 0.0;
+    double target_velocity = target;
+    double current_velocity = 0.0;
     if (is_left) {
-      current_vel = Instrumentation.e_left.getRate(); // inches/sec
+      current_velocity = last_left_velocity;
     } else {
-      current_vel = Instrumentation.e_right.getRate(); // inches/sec
+      current_velocity = last_right_velocity;
     }
 
     double output = 0.0;
-    if (Math.abs(target_vel - current_vel) <= 0.05) {
-      output = target_vel;
+    if (Math.abs(target_velocity - current_velocity) <= 0.05) {
+      output = target_velocity;
+    } else if (target_velocity > current_velocity) {
+      output = current_velocity + (0.02 * max_acceleration);
+    } else if (target_velocity < current_velocity) {
+      output = current_velocity - (0.02 * max_acceleration);
+    }
+
+    if (is_left) {
+      last_left_velocity = output;
     } else {
-      output = current_vel + (0.2 * max_acceleration);
+      last_right_velocity = output;
     }
 
     return output;
@@ -149,20 +156,14 @@ public class Drivetrain extends Subsystem {
   // <CRUISE CONTROL mode> Drive with Motion Profile assist
   public void driveAssist(double left, double right) {
     // Get target velocities for each side of the drivebase
-    double left_target_vel = left;
-    double right_target_vel = right;
+    double left_target_velocity = left;
+    double right_target_velocity = right;
 
     // Assign the target velocities to each side of the drivebase with Motion Magic
     // m_left_front.set(ControlMode.MotionMagic, left_target_pos);
     // m_right_front.set(ControlMode.MotionMagic, right_target_pos);
-    m_left_front.set(ControlMode.PercentOutput, getMotion(left_target_vel, true));
-    m_right_front.set(ControlMode.PercentOutput, getMotion(right_target_vel, false));
-
-    /* 10 Ms timeout, allow CAN Frames to process */
-    try {
-      TimeUnit.MILLISECONDS.sleep(10);
-    } catch (Exception e) {
-      /* Do Nothing */ }
+    m_left_front.set(ControlMode.PercentOutput, getMotion(left_target_velocity, true));
+    m_right_front.set(ControlMode.PercentOutput, getMotion(right_target_velocity, false));
   }
 
   // <HYPER STEER mode> Drive manually without Motion Profiling

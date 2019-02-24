@@ -138,6 +138,6 @@ public class OI {
   }
 
   public double getSlider() {
-    return liftStick.getThrottle();
+    return (liftStick.getThrottle() + 1) / 2;
   }
 }

@@ -27,8 +27,10 @@ public class Turn extends Command {
     }
 
     if (is_robot_centric) {
+      // Robot-centric target
       target_angle = Instrumentation.navx.getAngle() + angle;
     } else {
+      // Field-centric target
       target_angle = Constants.field_zero + angle;
     }
 
