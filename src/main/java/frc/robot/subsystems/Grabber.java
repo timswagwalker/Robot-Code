@@ -32,12 +32,12 @@ public class Grabber extends Subsystem {
   public Grabber() {
     // Define, reset, and don't invert the motor controllers
     m_arm = new WPI_VictorSPX(RobotMap.m_arm_port);
-    // m_intake_1 = new WPI_VictorSPX(RobotMap.m_intake_1_port);
-    // m_intake_2 = new WPI_VictorSPX(RobotMap.m_intake_2_port);
+    m_intake_1 = new WPI_VictorSPX(RobotMap.m_intake_1_port);
+    m_intake_2 = new WPI_VictorSPX(RobotMap.m_intake_2_port);
 
     m_arm.setInverted(false);
-    // m_intake_1.setInverted(false);
-    // m_intake_2.setInverted(false);
+    m_intake_1.setInverted(false);
+    m_intake_2.setInverted(false);
 
     // Define the double solenoid
     s_grabber = new DoubleSolenoid(RobotMap.s_grabber_channel_fwd, RobotMap.s_grabber_channel_rev);
