@@ -2,11 +2,9 @@
 
 This is the robot code for FRC team 7539's 2019 robot (Destination: Deep Space)
 
-## Notes about the code
-* The
-
 ## Key to the code
-m_<motor name> -> motors
-e_<encoder name> -> encoders
-l_<limit switch name> -> limit switches
-s_<solenoid name> -> solenoids
+m_<motor name>: motors <br>
+s_<servo name>: servos <br>
+e_<encoder name>: encoders <br>
+l_<limit switch name>: limit switches <br>
+p_<solenoid name>: solenoids <br>
