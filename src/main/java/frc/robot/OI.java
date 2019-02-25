@@ -66,6 +66,8 @@ public class OI {
 
     grab.whenPressed(new Grab());
     climb_hab.whenReleased(new ClimbHab());
+    driveBrake.whileHeld(new Brake(true));
+    liftBrake.whileHeld(new Brake(false));
   }
 
   public double deadband(double input) {

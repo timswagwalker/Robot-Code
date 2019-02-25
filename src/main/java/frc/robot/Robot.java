@@ -27,6 +27,7 @@ public class Robot extends TimedRobot {
   public static Elevator elevator;
   public static Grabber grabber;
   public static Climber climber;
+  public static Vision vision;
   public static OI oi;
 
   Command m_autonomousCommand;
@@ -41,6 +42,10 @@ public class Robot extends TimedRobot {
     Instrumentation.init();
     oi = new OI();
     drivetrain = new Drivetrain();
+    elevator = new Elevator();
+    grabber = new Grabber();
+    climber = new Climber();
+    vision = new Vision();
     // m_chooser.setDefaultOption("Default Auto", new Drive());
     // chooser.addOption("My Auto", new MyAutoCommand());
     // SmartDashboard.putData("Auto mode", m_chooser);
