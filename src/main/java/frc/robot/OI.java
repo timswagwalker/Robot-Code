@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.RobotMap;
+import frc.robot.commands.*;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -45,13 +46,27 @@ public class OI {
   // until it is finished as determined by it's isFinished method.
   // button.whenReleased(new ExampleCommand());
 
-  Joystick driveStick = new Joystick(1);
-  Joystick liftStick = new Joystick(2);
+  public Joystick driveStick;
+  public Joystick liftStick;
 
-  Button driveBrake = new JoystickButton(driveStick, RobotMap.brake_button);
-  Button liftBrake = new JoystickButton(liftStick, RobotMap.brake_button);
-  Button manual = new JoystickButton(driveStick, RobotMap.manual_button);
-  Button grab = new JoystickButton(liftStick, RobotMap.grab_button);
+  public Button driveBrake;
+  public Button liftBrake;
+  public Button manual;
+  public Button grab;
+  public Button climb_hab;
+
+  public OI() {
+    driveStick = new Joystick(1);
+    liftStick = new Joystick(2);
+    driveBrake = new JoystickButton(driveStick, RobotMap.brake_button);
+    liftBrake = new JoystickButton(liftStick, RobotMap.brake_button);
+    manual = new JoystickButton(driveStick, RobotMap.manual_button);
+    grab = new JoystickButton(liftStick, RobotMap.grab_button);
+    climb_hab = new JoystickButton(liftStick, RobotMap.climb_hab_button);
+
+    grab.whenPressed(new Grab());
+    climb_hab.whenReleased(new ClimbHab());
+  }
 
   public double deadband(double input) {
     if (input > +0.05)
@@ -126,14 +141,6 @@ public class OI {
       return -1;
     } else {
       return 0;
-    }
-  }
-
-  public Boolean getGrab() {
-    if (grab.get()) {
-      return true;
-    } else {
-      return false;
     }
   }
 

@@ -27,7 +27,6 @@ public class Drivetrain extends Subsystem {
   // here. Call these from Commands.
 
   WPI_TalonSRX m_left_front, m_left_follower, m_right_front, m_right_follower;
-  double max_acceleration;
   double last_right_velocity = 0.0;
   double last_left_velocity = 0.0;
 
@@ -64,9 +63,6 @@ public class Drivetrain extends Subsystem {
     // Set rear Talons to follow front Talons
     m_left_follower.follow(m_left_front);
     m_right_follower.follow(m_right_front);
-
-    // Set the cruise velocity and acceleration
-    max_acceleration = 1; // joystick_units/sec^2
 
     /* setupMotionMagic(); */
   }
@@ -139,9 +135,9 @@ public class Drivetrain extends Subsystem {
     if (Math.abs(target_velocity - current_velocity) <= 0.05) {
       output = target_velocity;
     } else if (target_velocity > current_velocity) {
-      output = current_velocity + (0.02 * max_acceleration);
+      output = current_velocity + (0.02 * Constants.max_acceleration);
     } else if (target_velocity < current_velocity) {
-      output = current_velocity - (0.02 * max_acceleration);
+      output = current_velocity - (0.02 * Constants.max_acceleration);
     }
 
     if (is_left) {

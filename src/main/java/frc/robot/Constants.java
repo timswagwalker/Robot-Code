@@ -34,4 +34,10 @@ public class Constants {
     // Sensitivity
     public static final double throttle_sensitivity = 0.5;
     public static final double turn_sensitivity = 0.5;
+
+    // Motion
+    public static final double max_acceleration = 0.5;
+
+    // Vision
+    public static final int camera_center = 80;
 }

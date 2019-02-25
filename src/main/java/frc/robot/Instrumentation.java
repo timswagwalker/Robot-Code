@@ -41,8 +41,16 @@ public class Instrumentation {
         // e_elevator.reset();
         // e_arm_angle.reset();
 
-        e_right.setDistancePerPulse(0.0047);            // inches
-        e_left.setDistancePerPulse(0.0047);             // inches
+        e_right.setDistancePerPulse(0.0047); // inches
+        e_left.setDistancePerPulse(0.0047); // inches
         // e_arm_angle.setDistancePerPulse(11.1111);       // degrees
+    }
+
+    public static double getHeading() {
+        double heading = navx.getFusedHeading();
+        if (heading > 180) {
+            heading = heading - 360;
+        }
+        return heading;
     }
 }

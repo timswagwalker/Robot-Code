@@ -43,6 +43,9 @@ public class RobotMap {
   public static int m_climber_rear_port = 10;
   public static int m_climber_rear_drive_port = 11;
 
+  // Servo ports
+  public static int s_front_camera_port = 0;
+
   // Encoder ports
   public static int e_right_port_1 = 0;
   public static int e_right_port_2 = 1;
@@ -54,8 +57,8 @@ public class RobotMap {
   public static int e_arm_port_2 = 7;
 
   // Solenoid channels
-  public static int s_grabber_channel_fwd = 0;
-  public static int s_grabber_channel_rev = 4;
+  public static int p_grabber_channel_fwd = 0;
+  public static int p_grabber_channel_rev = 4;
 
   // Limit Switch channels
   public static int l_extend_front_port = 1;
@@ -67,4 +70,5 @@ public class RobotMap {
   public static int brake_button = 1;
   public static int manual_button = 2;
   public static int grab_button = 2;
+  public static int climb_hab_button = 7;
 }

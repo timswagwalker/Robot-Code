@@ -25,9 +25,9 @@ public class Grabber extends Subsystem {
   // here. Call these from Commands.
 
   static WPI_VictorSPX m_arm, m_intake_1, m_intake_2;
-  static DoubleSolenoid s_grabber;
+  static DoubleSolenoid p_grabber;
 
-  public Boolean is_open = false;
+  public boolean is_open = false;
 
   public Grabber() {
     // Define, reset, and don't invert the motor controllers
@@ -40,7 +40,7 @@ public class Grabber extends Subsystem {
     m_intake_2.setInverted(false);
 
     // Define the double solenoid
-    s_grabber = new DoubleSolenoid(RobotMap.s_grabber_channel_fwd, RobotMap.s_grabber_channel_rev);
+    p_grabber = new DoubleSolenoid(RobotMap.p_grabber_channel_fwd, RobotMap.p_grabber_channel_rev);
   }
 
   @Override
@@ -52,12 +52,12 @@ public class Grabber extends Subsystem {
 
   // Open the grabber
   public void openGrabber() {
-    s_grabber.set(Value.kForward);
+    p_grabber.set(Value.kForward);
   }
 
   // Close the grabber
   public void closeGrabber() {
-    s_grabber.set(Value.kReverse);
+    p_grabber.set(Value.kReverse);
   }
 
   // Run the intake motors
